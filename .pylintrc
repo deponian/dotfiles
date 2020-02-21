@@ -1,0 +1,9 @@
+[FORMAT]
+indent-string=\t
+
+[MESSAGES CONTROL]
+# C0111: Missing docstring
+# R0904: Too many public methods
+# C0103: invalid-name
+# C0325: superfluous-parens
+disable=C0111,R0904,C0103,C0325
