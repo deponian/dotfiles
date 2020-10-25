@@ -66,12 +66,19 @@ install_utils () {
 
 # copy dotfiles
 copy_dotfiles () {
+	declare -A dotfiles
+	dotfiles=(	["alacritty.yml"]="${HOME}/.config/alacritty/alacritty.yml"
+				["gitconfig"]="${HOME}/.gitconfig"
+				["pylintrc"]="${HOME}/.pylintrc"
+				["tilda.conf"]="${HOME}/.config/tilda/config_0"
+				["tmux.conf"]="${HOME}/.tmux.conf"
+				["yamllint"]="${HOME}/.yamllint"
+				["sxhkdrc"]="${HOME}/.config/sxhkd/sxhkdrc")
 	cecho blue "[Copying dotfiles]"
-	for dotfile in ./.*; do
-		if [[ -f "${dotfile}" ]]; then
-			echo "::: Copying ${dotfile}"
-			cp "${dotfile}" "${HOME}"
-		fi
+	for dotfile in "${!dotfiles[@]}"; do
+		echo "::: Copying ${dotfile} to ${dotfiles[$dotfile]}"
+		mkdir -p "$(dirname "${dotfiles[$dotfile]}")"
+		cp "${dotfile}" "${dotfiles[$dotfile]}"
 	done
 	cecho green "[Done]"
 }
@@ -103,7 +110,7 @@ setup_vim () {
 		mkdir -p "${HOME}/.config"
 		ln -fsn "${HOME}/.vim" "${HOME}/.config/nvim"
 	else
-		echo "You have to specify mode as first parametr for setup_vim(). Modes are minimal and full."
+		echo "You have to specify mode as first parametr for setup_vim()."
 		exit 1
 	fi
 	cecho green "[Done]"
@@ -170,19 +177,22 @@ main () {
 
 	cat <<- EOF
 	::: You have to specify installation mode.
-	::: There are three of them: minimal, server and desktop.
-	::: All of them copy dotfiles and zsh config, but they differ in the following:
+	::: There are five of them: minimal, server, desktop, dotfiles and fonts.
+	::: First three copy dotfiles and zsh config, but they differ in details.
+	::: Last two install only one component each.
 	::: * minimal - minimal set of packages, no statically-linked utils from github and very light vim config.
 	::: * server - standard set of packages, all statically-linked utils form github, full config for vim and neovim.
 	::: * desktop - like standard plus gui-related packages and other stuff (like fonts)
+	::: * dotfiles - only dotfiles
+	::: * fonts - only fonts
 	EOF
 
 	mode="${1:-}"
 	while true; do
-		if [[ "${mode}" =~ ^(minimal|server|desktop)$ ]]; then
+		if [[ "${mode}" =~ ^(minimal|server|desktop|dotfiles|fonts)$ ]]; then
 			break
 		else
-			read -r -p 'Incorrect mode. Choose packages mode from "minimal", "server" and "desktop": ' mode
+			read -r -p 'Incorrect mode. Choose packages mode from the list above: ' mode
 		fi
 	done
 
@@ -203,24 +213,32 @@ main () {
 		fi
 	done
 
-	# these actions are the same for all modes.
-	copy_dotfiles
-	setup_zsh
-
 	case "${mode}" in
 		minimal)
+			copy_dotfiles
+			setup_zsh
 			install_packages minimal
 			setup_vim minimal
 			;;
 		server)
+			copy_dotfiles
+			setup_zsh
 			install_packages server
 			install_utils /usr/local/bin
 			setup_vim full
 			;;
 		desktop)
+			copy_dotfiles
+			setup_zsh
 			install_packages desktop
 			install_utils /usr/local/bin
 			setup_vim full
+			copy_fonts
+			;;
+		dotfiles)
+			copy_dotfiles
+			;;
+		fonts)
 			copy_fonts
 			;;
 		*)

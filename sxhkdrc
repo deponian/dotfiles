@@ -1,0 +1,4 @@
+# Dropdown terminal using tdrop and alacritty
+ctrl + space
+	tdrop -a -h 64% -y 0 alacritty
+
