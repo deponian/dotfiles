@@ -2,3 +2,8 @@ extends: default
 
 rules:
   line-length: disable
+  indentation:
+    indent-sequences: whatever
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
