@@ -6,6 +6,9 @@
 [pull]
 	ff = only
 
+[diff]
+	tool = vimdiff
+
 ; [commit]
 ; 	gpgsign = true
 
