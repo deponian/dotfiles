@@ -9,6 +9,9 @@
 [diff]
 	tool = vimdiff
 
+[init]
+	defaultBranch = main
+
 ; [commit]
 ; 	gpgsign = true
 
