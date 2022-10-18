@@ -16,6 +16,7 @@
 ; 	gpgsign = true
 
 ; [core]
+; 	quotePath = false
 ; 	pager = delta
 
 ; [interactive]
