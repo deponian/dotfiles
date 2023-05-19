@@ -19,7 +19,7 @@ check_software () {
 	do
 		command -v "${program}" >/dev/null 2>&1 || \
 		{
-			echo >&2 "This script needs ${program}. Aborting."
+			echo >&2 -e "Aborting.\nThis script needs these programs:\n${*}"
 			exit 1
 		}
 	done
@@ -35,7 +35,7 @@ install_packages () {
 	mkdir -p "${tmpdir}"
 	(
 		cd "${tmpdir}"
-		wget --quiet "https://raw.githubusercontent.com/deponian/scripts/master/necessary-packages.sh" \
+		wget --quiet "https://raw.githubusercontent.com/deponian/scripts/main/necessary-packages.sh" \
 			--output-document necessary-packages
 		chmod +x necessary-packages
 		sudo ./necessary-packages "${mode}"
@@ -55,7 +55,7 @@ install_utils () {
 	mkdir -p "${tmpdir}"
 	(
 		cd "${tmpdir}"
-		wget --quiet "https://raw.githubusercontent.com/deponian/scripts/master/necessary-utils.sh" \
+		wget --quiet "https://raw.githubusercontent.com/deponian/scripts/main/necessary-utils.sh" \
 			--output-document necessary-utils
 		chmod +x necessary-utils
 		sudo ./necessary-utils "${install_path}"
@@ -132,7 +132,7 @@ setup_zsh () {
 	mkdir -p "${tmpdir}"
 	(
 		cd "${tmpdir}"
-		wget --quiet "https://raw.githubusercontent.com/deponian/zsh.config/master/install.sh" \
+		wget --quiet "https://raw.githubusercontent.com/deponian/zsh.config/main/install.sh" \
 			--output-document install.sh
 		chmod +x install.sh
 
