@@ -68,7 +68,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.93
+  opacity: 0.95
 
   # Startup Mode (changes require restart)
   #
@@ -200,8 +200,8 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    background: '#101010'
-    foreground: '#F2F2F2'
+    background: '#13131d'
+    foreground: '#f2f2f2'
 
     # Bright and dim foreground colors
     #
@@ -294,25 +294,25 @@ colors:
 
   # Normal colors
   normal:
-    black: '#0d0d0d'
-    red: '#ff301b'
-    green: '#20e631'
-    yellow: '#ffc620'
-    blue: '#1ba6fa'
-    magenta: '#8763b8'
-    cyan: '#21deef'
-    white: '#f2f2f2'
+    black:   '#1b1d2b'
+    red:     '#ff757f'
+    green:   '#c3e88d'
+    yellow:  '#ffc777'
+    blue:    '#82aaff'
+    magenta: '#c099ff'
+    cyan:    '#86e1fc'
+    white:   '#d0d7f4'
 
   # Bright colors
   bright:
-    black: '#6D7070'
-    red: '#FF4352'
-    green: '#20E66C'
-    yellow: '#FFD750'
-    blue: '#1BA6FA'
-    magenta: '#A578EA'
-    cyan: '#73FBF1'
-    white: '#F2F2F2'
+    black:   '#575d88'
+    red:     '#ff757f'
+    green:   '#c3e88d'
+    yellow:  '#ffc777'
+    blue:    '#82aaff'
+    magenta: '#c099ff'
+    cyan:    '#86e1fc'
+    white:   '#d8e0f8'
 
   # Dim colors
   #
@@ -768,7 +768,9 @@ mouse:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: F11,                                   action: ToggleFullscreen          }
+  - { key: F11,                                   action: ToggleFullscreen }
+  - { key: "LBracket", mods: Control, chars: "\x1b[91;5u" }
+  # - { key: "Escape", chars: "\x1b[27" }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
@@ -879,19 +881,6 @@ key_bindings:
   #- { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
-  # https://github.com/ziontee113/yt-tutorials/tree/nvim_key_combos_in_alacritty_and_kitty
-  # - { key: H, mods: Control|Shift, chars: "\x1b[72;6u" }
-  # - { key: J, mods: Control|Shift, chars: "\x1b[74;6u" }
-  # - { key: K, mods: Control|Shift, chars: "\x1b[75;6u" }
-  # - { key: L, mods: Control|Shift, chars: "\x1b[76;6u" }
-
-  # - { key: I, mods: Control, chars: "\x1b[105;5u" }
-
-  # - { key: Period, mods: Control, chars: "\x1b[46;5u" }
-  # - { key: Comma, mods: Control, chars: "\x1b[44;5u" }
-  # - { key: Semicolon, mods: Control, chars: "\x1b[59;5u" }
-
-  # - { key: Return, mods: Shift, chars: "\x1b[13;2u" }
 
 #debug:
   # Display the time it takes to redraw each frame.
