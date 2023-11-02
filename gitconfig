@@ -23,6 +23,7 @@
 ; 	diffFilter = delta --color-only
 
 ; [delta]
+; 	navigate = true
 ; 	syntax-theme = "OneHalfDark"
 ; 	line-numbers-left-format = "{nm:^4}:"
 ; 	line-numbers-right-format = "{np:^4}"
@@ -33,4 +34,9 @@
 ; 	hunk-header-style = "raw"
 ; 	hunk-header-decoration-style = "none"
 ; 	file-modified-label = "changed: "
-; 	navigate = true
+; 	merge-conflict-begin-symbol = "▼ "
+; 	merge-conflict-end-symbol = "▲ "
+; 	merge-conflict-ours-diff-header-decoration-style = "#4a4a4a box"
+; 	merge-conflict-ours-diff-header-style = "#fca800"
+; 	merge-conflict-theirs-diff-header-decoration-style = "#4a4a4a box"
+; 	merge-conflict-theirs-diff-header-style = "#03cdff"
