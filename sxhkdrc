@@ -1,3 +1,0 @@
-# Dropdown terminal using tdrop and alacritty
-ctrl + space
-	tdrop -a -m -h 990 -y 0 alacritty --title TopDownAlacritty --command tmux new-session -n 'main'

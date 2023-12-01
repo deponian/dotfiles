@@ -66,28 +66,8 @@ install_utils () {
 
 # copy dotfiles
 copy_dotfiles () {
-	declare -A dotfiles
-	dotfiles=(	["alacritty.yml"]="${HOME}/.config/alacritty/alacritty.yml"
-				["gitconfig"]="${HOME}/.gitconfig"
-				["pylintrc"]="${HOME}/.pylintrc"
-				["tilda.conf"]="${HOME}/.config/tilda/config_0"
-				["tmux.conf"]="${HOME}/.tmux.conf"
-				["yamllint"]="${HOME}/.yamllint"
-				["sxhkdrc"]="${HOME}/.config/sxhkd/sxhkdrc")
 	cecho blue "[Copying dotfiles]"
-	for dotfile in "${!dotfiles[@]}"; do
-		echo "::: Copying ${dotfile} to ${dotfiles[$dotfile]}"
-		mkdir -p "$(dirname "${dotfiles[$dotfile]}")"
-		cp "${dotfile}" "${dotfiles[$dotfile]}"
-	done
-	cecho green "[Done]"
-}
-
-# copy fonts
-copy_fonts () {
-	cecho blue "[Copying fonts]"
-	mkdir -p "${HOME}/.local/share/fonts"
-	cp Inconsolata-SemiBold.otf "${HOME}/.local/share/fonts"
+	cp -r ./dotfiles/.[^.]* "${HOME}"
 	cecho green "[Done]"
 }
 
@@ -98,17 +78,15 @@ setup_vim () {
 	mode="${1:?"You have to specify mode as first parametr"}"
 	cecho blue "[Setting up vim and neovim]"
 	if [[ "${mode}" == minimal ]]; then
-		# only vim wiht light config
+		# only vim with light config
 		[[ -d "${HOME}/.vim" ]] && mv -n "${HOME}/.vim" "${HOME}/.vim.old" && rm -rf "${HOME}/.vim"
 		git clone -b light "https://github.com/deponian/vim.config" "${HOME}/.vim"
 		echo
 	elif [[ "${mode}" == full ]]; then
-		# vim and neovim with full config
-		[[ -d "${HOME}/.vim" ]] && mv -n "${HOME}/.vim" "${HOME}/.vim.old" && rm -rf "${HOME}/.vim"
+		# neovim with full config
 		[[ -d "${HOME}/.config/nvim" ]] && mv -n "${HOME}/.config/nvim" "${HOME}/.config/nvim.old" && rm -rf "${HOME}/.config/nvim"
-		git clone "https://github.com/deponian/vim.config" "${HOME}/.vim"
-		mkdir -p "${HOME}/.config"
-		ln -fsn "${HOME}/.vim" "${HOME}/.config/nvim"
+		mkdir -p "${HOME}/.config/nvim"
+		git clone "https://github.com/deponian/vim.config" "${HOME}/.config/nvim"
 	else
 		echo "You have to specify mode as first parametr for setup_vim()."
 		exit 1
@@ -125,7 +103,7 @@ setup_zsh () {
 	zsh_files=("${HOME}"/.z*)
 	if [[ "${#zsh_files[@]}" != 0 && ! -d "${HOME}/.old.zsh" ]]; then
 		mkdir "${HOME}/.old.zsh"
-		cp -r "${zsh_files[@]}" "${HOME}/.old.zsh"
+		mv "${zsh_files[@]}" "${HOME}/.old.zsh"
 	fi
 
 	tmpdir="/tmp/${RANDOM}"
@@ -149,23 +127,18 @@ setup_root () {
 	user_home="$(getent passwd "$(whoami)" | cut -f6 -d:)"
 	root_home="$(getent passwd root | cut -f6 -d:)"
 
+	sudo -i
+
 	echo "::: Setting up vim and neovim "
 	sudo mkdir -p "${root_home}/.config"
 	sudo ln -fsn "${user_home}/.vim" "${root_home}/.vim"
-	sudo ln -fsn "${user_home}/.vim" "${root_home}/.config/nvim"
+	sudo ln -fsn "${user_home}/.config/nvim" "${root_home}/.config/nvim"
 
 	echo "::: Setting up tmux"
 	sudo ln -fsn "${user_home}/.tmux.conf" "${root_home}/.tmux.conf"
 
 	echo "::: Setting up zsh"
-	sudo chsh -s /usr/bin/zsh
-	sudo ln -fsn "${user_home}/.zprezto" "${root_home}/.zprezto"
-	sudo ln -fsn "${user_home}/.zprezto/runcoms/zlogin" "${root_home}/.zlogin"
-	sudo ln -fsn "${user_home}/.zprezto/runcoms/zlogout" "${root_home}/.zlogout"
-	sudo ln -fsn "${user_home}/.zprezto/runcoms/zpreztorc" "${root_home}/.zpreztorc"
-	sudo ln -fsn "${user_home}/.zprezto/runcoms/zprofile" "${root_home}/.zprofile"
-	sudo ln -fsn "${user_home}/.zprezto/runcoms/zshenv" "${root_home}/.zshenv"
-	sudo ln -fsn "${user_home}/.zprezto/runcoms/zshrc" "${root_home}/.zshrc"
+	sudo bash -c "$(declare -f setup_zsh); setup_zsh"
 	cecho green "[Done]"
 }
 
@@ -176,20 +149,19 @@ main () {
 	check_software git wget zsh chsh sudo
 
 	cat <<- EOF
-	::: You have to specify installation mode.
-	::: There are five of them: minimal, server, desktop, dotfiles and fonts.
-	::: First three copy dotfiles and zsh config, but they differ in details.
-	::: Last two install only one component each.
-	::: * minimal - minimal set of packages, no statically-linked utils from github and very light vim config.
-	::: * server - standard set of packages, all statically-linked utils form github, full config for vim and neovim.
+	::: Choose an installation mode
+	::: There are four of them: minimal, server, desktop and dotfiles
+	::: First three copy dotfiles and zsh config, but they differ in details
+	::: The last one installs only one component
+	::: * minimal - minimal set of packages, no statically-linked utils from github and very light vim config
+	::: * server - standard set of packages, all statically-linked utils form github, full config for vim and neovim
 	::: * desktop - like standard plus gui-related packages and other stuff (like fonts)
 	::: * dotfiles - only dotfiles
-	::: * fonts - only fonts
 	EOF
 
 	mode="${1:-}"
 	while true; do
-		if [[ "${mode}" =~ ^(minimal|server|desktop|dotfiles|fonts)$ ]]; then
+		if [[ "${mode}" =~ ^(minimal|server|desktop|dotfiles)$ ]]; then
 			break
 		else
 			read -r -p 'Incorrect mode. Choose packages mode from the list above: ' mode
@@ -197,11 +169,11 @@ main () {
 	done
 
 	cat <<- EOF
-	::: You have to choose if you want to setup root directory configuration or not.
-	::: There are two options: root and noroot.
-	::: * root - create symlinks in root home directory to files in your user home directory
-	::: * noroot - don't create symlinks in root home directory
-	::: If you run this script as root then "noroot" option is applied in any case.
+	::: Do you want to set up root home directory
+	::: There are two options: root and noroot
+	::: * root - set up root home directory
+	::: * noroot - don't touch any root files
+	::: If you run this script as root then "root" option is applied in any case
 	EOF
 
 	root_option="${2:-}"
@@ -233,13 +205,9 @@ main () {
 			install_packages desktop
 			install_utils /usr/local/bin
 			setup_vim full
-			copy_fonts
 			;;
 		dotfiles)
 			copy_dotfiles
-			;;
-		fonts)
-			copy_fonts
 			;;
 		*)
 			echo "Wrong mode."
@@ -247,8 +215,8 @@ main () {
 			;;
 	esac
 
-	# create symlinks in root home directory to installed configuration
-	# if root doesn't run this script
+	# setup root home directory
+	# don't run setup_root if this script is already running by root
 	if [[ "${root_option}" == "root" && "$(id -u)" != 0 ]]; then
 		setup_root
 	fi
