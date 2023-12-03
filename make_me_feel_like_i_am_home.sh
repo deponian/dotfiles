@@ -67,7 +67,7 @@ install_utils () {
 # copy dotfiles
 copy_dotfiles () {
 	cecho blue "[Copying dotfiles]"
-	cp -r ./dotfiles/.[^.]* "${HOME}"
+	cp -r "$(dirname "${0}")"/dotfiles/.[^.]* "${HOME}"
 	cecho green "[Done]"
 }
 
@@ -145,54 +145,53 @@ setup_root () {
 main () {
 	local mode
 
-	# check we have everything we need
-	check_software git wget zsh chsh sudo
-
-	cat <<- EOF
-	::: Choose an installation mode
-	::: There are four of them: minimal, server, desktop and dotfiles
-	::: First three copy dotfiles and zsh config, but they differ in details
-	::: The last one installs only one component
-	::: * minimal - minimal set of packages, no statically-linked utils from github and very light vim config
-	::: * server - standard set of packages, all statically-linked utils form github, full config for vim and neovim
-	::: * desktop - like standard plus gui-related packages and other stuff (like fonts)
-	::: * dotfiles - only dotfiles
-	EOF
-
 	mode="${1:-}"
 	while true; do
 		if [[ "${mode}" =~ ^(minimal|server|desktop|dotfiles)$ ]]; then
 			break
 		else
-			read -r -p 'Incorrect mode. Choose packages mode from the list above: ' mode
+			cat <<- EOF
+			::: Choose an installation mode
+			::: There are four of them: minimal, server, desktop and dotfiles
+			::: First three copy dotfiles and zsh config, but they differ in details
+			::: The last one installs only one component
+			::: * minimal - minimal set of packages, no statically-linked utils from github and very light vim config
+			::: * server - standard set of packages, all statically-linked utils form github, full config for vim and neovim
+			::: * desktop - like standard plus gui-related packages and other stuff (like fonts)
+			::: * dotfiles - only dotfiles
+			EOF
+
+			read -r -p 'Choose packages mode from the list above: ' mode
 		fi
 	done
-
-	cat <<- EOF
-	::: Do you want to set up root home directory
-	::: There are two options: root and noroot
-	::: * root - set up root home directory
-	::: * noroot - don't touch any root files
-	::: If you run this script as root then "root" option is applied in any case
-	EOF
 
 	root_option="${2:-}"
 	while true; do
 		if [[ "${root_option}" =~ ^(root|noroot)$ ]]; then
 			break
 		else
-			read -r -p 'Incorrect option. Choose "root" or "noroot": ' root_option
+			cat <<- EOF
+			::: Do you want to set up root home directory
+			::: There are two options: root and noroot
+			::: * root - set up root home directory
+			::: * noroot - don't touch any root files
+			::: If you run this script as root then "root" option is applied in any case
+			EOF
+
+			read -r -p 'Choose "root" or "noroot": ' root_option
 		fi
 	done
 
 	case "${mode}" in
 		minimal)
+			check_software git wget zsh chsh sudo
 			copy_dotfiles
 			setup_zsh
 			install_packages minimal
 			setup_vim minimal
 			;;
 		server)
+			check_software git wget zsh chsh sudo
 			copy_dotfiles
 			setup_zsh
 			install_packages server
@@ -200,6 +199,7 @@ main () {
 			setup_vim full
 			;;
 		desktop)
+			check_software git wget zsh chsh sudo
 			copy_dotfiles
 			setup_zsh
 			install_packages desktop
