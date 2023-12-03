@@ -162,28 +162,28 @@ main () {
 
 	case "${mode}" in
 		minimal)
-			check_software git wget zsh chsh sudo
+			check_software git wget zsh sudo
 			copy_dotfiles
 			setup_zsh
 			install_packages minimal
 			setup_vim minimal
 			;;
 		server)
-			check_software git wget zsh chsh sudo
+			check_software git wget zsh sudo
 			copy_dotfiles
 			setup_zsh
 			install_packages server
 			setup_vim full
 			;;
 		desktop)
-			check_software git wget zsh chsh sudo
+			check_software git wget zsh sudo
 			copy_dotfiles
 			setup_zsh
 			install_packages desktop
 			setup_vim full
 			;;
 		dotfiles)
-			check_software git wget zsh chsh
+			check_software git wget zsh
 			copy_dotfiles
 			setup_zsh
 			setup_vim full
