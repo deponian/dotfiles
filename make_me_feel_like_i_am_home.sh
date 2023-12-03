@@ -127,8 +127,6 @@ setup_root () {
 	user_home="$(getent passwd "$(whoami)" | cut -f6 -d:)"
 	root_home="$(getent passwd root | cut -f6 -d:)"
 
-	sudo -i
-
 	echo "::: Setting up vim and neovim "
 	sudo mkdir -p "${root_home}/.config"
 	sudo ln -fsn "${user_home}/.vim" "${root_home}/.vim"
