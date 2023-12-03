@@ -207,7 +207,10 @@ main () {
 			setup_vim full
 			;;
 		dotfiles)
+			check_software git wget zsh chsh
 			copy_dotfiles
+			setup_zsh
+			setup_vim full
 			;;
 		*)
 			echo "Wrong mode."
