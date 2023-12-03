@@ -44,26 +44,6 @@ install_packages () {
 	cecho green "[Done]"
 }
 
-# install programs which you rarely can find in distro repos
-# they are all one-binary programs, so you don't need any dependencies
-install_utils () {
-	local install_path tmpdir
-
-	install_path="${1:-/usr/local/bin}"
-	cecho blue "[Installing utils]"
-	tmpdir="/tmp/${RANDOM}"
-	mkdir -p "${tmpdir}"
-	(
-		cd "${tmpdir}"
-		wget --quiet "https://raw.githubusercontent.com/deponian/scripts/main/necessary-utils.sh" \
-			--output-document necessary-utils
-		chmod +x necessary-utils
-		sudo ./necessary-utils "${install_path}"
-	)
-	rm -rf "${tmpdir}"
-	cecho green "[Done]"
-}
-
 # copy dotfiles
 copy_dotfiles () {
 	cecho blue "[Copying dotfiles]"
@@ -193,7 +173,6 @@ main () {
 			copy_dotfiles
 			setup_zsh
 			install_packages server
-			install_utils /usr/local/bin
 			setup_vim full
 			;;
 		desktop)
@@ -201,7 +180,6 @@ main () {
 			copy_dotfiles
 			setup_zsh
 			install_packages desktop
-			install_utils /usr/local/bin
 			setup_vim full
 			;;
 		dotfiles)
