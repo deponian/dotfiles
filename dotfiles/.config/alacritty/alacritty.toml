@@ -1,0 +1,75 @@
+[colors]
+draw_bold_text_with_bright_colors = true
+transparent_background_colors = false
+
+[colors.primary]
+background = "#13131d"
+foreground = "#f2f2f2"
+
+[colors.normal]
+black = "#1b1d2b"
+blue = "#82aaff"
+cyan = "#86e1fc"
+green = "#c3e88d"
+magenta = "#c099ff"
+red = "#ff757f"
+white = "#d0d7f4"
+yellow = "#ffc777"
+
+[colors.bright]
+black = "#575d88"
+blue = "#82aaff"
+cyan = "#86e1fc"
+green = "#c3e88d"
+magenta = "#c099ff"
+red = "#ff757f"
+white = "#d8e0f8"
+yellow = "#ffc777"
+
+[colors.hints.end]
+background = "#1d1f21"
+foreground = "#e9ff5e"
+
+[colors.hints.start]
+background = "#e9ff5e"
+foreground = "#1d1f21"
+
+[colors.search.matches]
+background = "#E5C07B"
+foreground = "#3E4452"
+
+[cursor]
+blink_interval = 500
+
+[cursor.style]
+blinking = "On"
+shape = "Beam"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Medium"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F12"
+
+[[keyboard.bindings]]
+chars = "\u001B[91;5u"
+key = "LBracket"
+mods = "Control"
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 10000
+
+[window]
+decorations = "none"
+opacity = 0.95
