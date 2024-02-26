@@ -15,6 +15,9 @@
 ; [commit]
 ; 	gpgsign = true
 
+; [tag]
+; 	forceSignAnnotated = true
+
 ; [core]
 ; 	quotePath = false
 ; 	pager = delta
