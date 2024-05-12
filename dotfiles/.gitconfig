@@ -1,45 +1,45 @@
 [user]
-	email = deponian@pm.me
-	name = Rufus Deponian
-	; signingkey = 5BB777C4C77923CB
+  email = deponian@pm.me
+  name = Rufus Deponian
+  ; signingkey = 5BB777C4C77923CB
 
 [pull]
-	ff = only
+  ff = only
 
 [diff]
-	tool = vimdiff
+  tool = vimdiff
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
 
 ; [commit]
-; 	gpgsign = true
+;   gpgsign = true
 
 ; [tag]
-; 	forceSignAnnotated = true
+;   gpgsign = true
 
 ; [core]
-; 	quotePath = false
-; 	pager = delta
+;   quotePath = false
+;   pager = delta
 
 ; [interactive]
-; 	diffFilter = delta --color-only
+;   diffFilter = delta --color-only
 
 ; [delta]
-; 	navigate = true
-; 	syntax-theme = "OneHalfDark"
-; 	line-numbers-left-format = "{nm:^4}:"
-; 	line-numbers-right-format = "{np:^4}"
-; 	commit-style = "raw"
-; 	commit-decoration-style = "#4a4a4a overline"
-; 	file-style = "#fca800"
-; 	file-decoration-style = "#4a4a4a"
-; 	hunk-header-style = "raw"
-; 	hunk-header-decoration-style = "none"
-; 	file-modified-label = "changed: "
-; 	merge-conflict-begin-symbol = "▼ "
-; 	merge-conflict-end-symbol = "▲ "
-; 	merge-conflict-ours-diff-header-decoration-style = "#4a4a4a box"
-; 	merge-conflict-ours-diff-header-style = "#fca800"
-; 	merge-conflict-theirs-diff-header-decoration-style = "#4a4a4a box"
-; 	merge-conflict-theirs-diff-header-style = "#03cdff"
+;   navigate = true
+;   syntax-theme = "OneHalfDark"
+;   line-numbers-left-format = "{nm:^4}:"
+;   line-numbers-right-format = "{np:^4}"
+;   commit-style = "raw"
+;   commit-decoration-style = "#4a4a4a overline"
+;   file-style = "#fca800"
+;   file-decoration-style = "#4a4a4a"
+;   hunk-header-style = "raw"
+;   hunk-header-decoration-style = "none"
+;   file-modified-label = "changed: "
+;   merge-conflict-begin-symbol = "▼ "
+;   merge-conflict-end-symbol = "▲ "
+;   merge-conflict-ours-diff-header-decoration-style = "#4a4a4a box"
+;   merge-conflict-ours-diff-header-style = "#fca800"
+;   merge-conflict-theirs-diff-header-decoration-style = "#4a4a4a box"
+;   merge-conflict-theirs-diff-header-style = "#03cdff"
