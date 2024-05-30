@@ -94,7 +94,7 @@ setup_zsh () {
 			--output-document install.sh
 		chmod +x install.sh
 
-		./install.sh
+		./install.sh nochsh
 	)
 	rm -rf "${tmpdir}"
 	cecho green "[Done]"
@@ -198,6 +198,13 @@ main () {
 	# don't run setup_root if this script is already running by root
 	if [[ "${root_option}" == "root" && "$(id -u)" != 0 ]]; then
 		setup_root
+	fi
+
+	chsh_option="${3:-"chsh"}"
+	if [[ "${chsh_option}" != "nochsh" ]]; then
+		until chsh -s /usr/bin/zsh; do
+			echo "Wrong password."
+		done
 	fi
 
 	cecho cyan "::::::: Now you can feel like you are home. :::::::"
