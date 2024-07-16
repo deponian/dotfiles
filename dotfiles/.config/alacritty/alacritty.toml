@@ -3,28 +3,39 @@ draw_bold_text_with_bright_colors = true
 transparent_background_colors = false
 
 [colors.primary]
-background = "#13131d"
+background = "#0d0f1f"
 foreground = "#f2f2f2"
 
+# Normal colors
 [colors.normal]
 black = "#1b1d2b"
-blue = "#82aaff"
-cyan = "#86e1fc"
-green = "#c3e88d"
-magenta = "#c099ff"
 red = "#ff757f"
+green = "#c3e88d"
+yellow = "#ffc777"
+blue = "#82aaff"
+magenta = "#c099ff"
+cyan = "#86e1fc"
 white = "#d0d7f4"
-yellow = "#ffc777"
 
+# Bright colors
 [colors.bright]
-black = "#575d88"
-blue = "#82aaff"
-cyan = "#86e1fc"
-green = "#c3e88d"
-magenta = "#c099ff"
+black = "#444a73"
 red = "#ff757f"
-white = "#d8e0f8"
+green = "#c3e88d"
 yellow = "#ffc777"
+blue = "#82aaff"
+magenta = "#c099ff"
+cyan = "#86e1fc"
+white = "#d8e0f8"
+
+# Indexed Colors
+[[colors.indexed_colors]]
+index = 16
+color = "#ff966c"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#c53b53"
 
 [colors.hints.end]
 background = "#1d1f21"
@@ -49,7 +60,7 @@ shape = "Beam"
 TERM = "xterm-256color"
 
 [font]
-size = 10
+size = 16
 
 [font.normal]
 family = "FiraCode Nerd Font"
