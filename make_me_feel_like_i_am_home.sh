@@ -103,13 +103,12 @@ setup_zsh () {
 # create symlinks in root home directory
 # and change default shell
 setup_root () {
-	cecho red "[Setting up root user]"
+	echo "[Setting up root user]"
 	user_home="$(getent passwd "$(whoami)" | cut -f6 -d:)"
 	root_home="$(getent passwd root | cut -f6 -d:)"
 
 	echo "::: Setting up vim and neovim "
 	sudo mkdir -p "${root_home}/.config"
-	sudo ln -fsn "${user_home}/.vim" "${root_home}/.vim"
 	sudo ln -fsn "${user_home}/.config/nvim" "${root_home}/.config/nvim"
 
 	echo "::: Setting up tmux"
@@ -117,7 +116,7 @@ setup_root () {
 
 	echo "::: Setting up zsh"
 	sudo bash -c "$(declare -f setup_zsh); setup_zsh"
-	cecho green "[Done]"
+	echo "[Done]"
 }
 
 main () {
