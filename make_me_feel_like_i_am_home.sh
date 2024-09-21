@@ -8,7 +8,9 @@ function cecho {
 	case "${1}" in
 		red   ) echo -e "\e[91m${2}\e[39m";;
 		green ) echo -e "\e[92m${2}\e[39m";;
+		yellow) echo -e "\e[93m${2}\e[39m";;
 		blue  ) echo -e "\e[94m${2}\e[39m";;
+		purple) echo -e "\e[95m${2}\e[39m";;
 		cyan  ) echo -e "\e[96m${2}\e[39m";;
 	esac
 }
@@ -55,20 +57,20 @@ copy_dotfiles () {
 setup_vim () {
 	local mode
 
-	mode="${1:?"You have to specify mode as first parametr"}"
+	mode="${1:?"You have to specify mode as first parameter"}"
 	cecho blue "[Setting up vim and neovim]"
 	if [[ "${mode}" == minimal ]]; then
 		# only vim with light config
-		[[ -d "${HOME}/.vim" ]] && mv -n "${HOME}/.vim" "${HOME}/.vim.old" && rm -rf "${HOME}/.vim"
+		[[ -d "${HOME}/.vim" ]] && cecho purple "${HOME}/.vim already exists, skipping..." && return
 		git clone -b light "https://github.com/deponian/vim.config" "${HOME}/.vim"
 		echo
 	elif [[ "${mode}" == full ]]; then
 		# neovim with full config
-		[[ -d "${HOME}/.config/nvim" ]] && mv -n "${HOME}/.config/nvim" "${HOME}/.config/nvim.old" && rm -rf "${HOME}/.config/nvim"
+		[[ -d "${HOME}/.config/nvim" ]] && cecho purple "${HOME}/.config/nvim already exists, skipping..." && return
 		mkdir -p "${HOME}/.config/nvim"
 		git clone "https://github.com/deponian/vim.config" "${HOME}/.config/nvim"
 	else
-		echo "You have to specify mode as first parametr for setup_vim()."
+		echo "You have to specify mode as first parameter for setup_vim()."
 		exit 1
 	fi
 	cecho green "[Done]"
@@ -76,15 +78,11 @@ setup_vim () {
 
 # setup zsh
 setup_zsh () {
-	local zsh_files tmpdir
+	local tmpdir
 
 	cecho blue "[Setting up zsh]"
-	# make backup if previous installation exists
-	zsh_files=("${HOME}"/.z*)
-	if [[ "${#zsh_files[@]}" != 0 && ! -d "${HOME}/.old.zsh" ]]; then
-		mkdir "${HOME}/.old.zsh"
-		mv "${zsh_files[@]}" "${HOME}/.old.zsh"
-	fi
+
+	[[ -d "${HOME}/.zim" ]] && cecho purple "${HOME}/.zim already exists, skipping..." && return
 
 	tmpdir="/tmp/${RANDOM}"
 	mkdir -p "${tmpdir}"
@@ -103,7 +101,7 @@ setup_zsh () {
 # create symlinks in root home directory
 # and change default shell
 setup_root () {
-	echo "[Setting up root user]"
+	cecho blue "[Setting up root user]"
 	user_home="$(getent passwd "$(whoami)" | cut -f6 -d:)"
 	root_home="$(getent passwd root | cut -f6 -d:)"
 
@@ -115,8 +113,8 @@ setup_root () {
 	sudo ln -fsn "${user_home}/.tmux.conf" "${root_home}/.tmux.conf"
 
 	echo "::: Setting up zsh"
-	sudo bash -c "$(declare -f setup_zsh); setup_zsh"
-	echo "[Done]"
+	sudo bash -c "$(declare -f setup_zsh; declare -f cecho); setup_zsh"
+	echo green "[Done]"
 }
 
 main () {
