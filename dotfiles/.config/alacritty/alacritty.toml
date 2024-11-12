@@ -56,9 +56,6 @@ blink_interval = 500
 blinking = "On"
 shape = "Beam"
 
-[env]
-TERM = "xterm-256color"
-
 [font]
 size = 16
 
