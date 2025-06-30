@@ -1,7 +1,13 @@
 [user]
-  email = deponian@pm.me
+  email = rufus@deponian.com
   name = Rufus Deponian
-  ; signingkey = 5BB777C4C77923CB
+	; signingkey = ~/.ssh/id_ed25519_yubikey_work.pub
+
+; [gpg]
+; 	format = ssh
+
+; [gpg "ssh"]
+; 	allowedSignersFile = ~/.ssh/allowed_signers
 
 [pull]
   ff = only
