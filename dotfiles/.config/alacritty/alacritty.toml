@@ -57,20 +57,11 @@ blinking = "On"
 shape = "Beam"
 
 [font]
-size = 16
+size = 18
 
 [font.normal]
 family = "FiraCode Nerd Font"
 style = "Medium"
-
-[[keyboard.bindings]]
-action = "ToggleFullscreen"
-key = "F12"
-
-[[keyboard.bindings]]
-chars = "\u001B[91;5u"
-key = "LBracket"
-mods = "Control"
 
 [mouse]
 hide_when_typing = true
@@ -81,3 +72,21 @@ history = 10000
 [window]
 decorations = "none"
 opacity = 0.95
+
+[keyboard]
+bindings = [
+  # toggle fullscreen
+  { key = "F12", action = "ToggleFullscreen"},
+
+  # map Command + h,j,k,l to Alt + h,j,k,l
+  { key = "J",      mods = "Command",       chars = "\u001Bj" },
+  { key = "H",      mods = "Command",       chars = "\u001Bh" },
+  { key = "K",      mods = "Command",       chars = "\u001Bk" },
+  { key = "L",      mods = "Command",       chars = "\u001Bl" },
+
+  # map Command + H,J,K,L to Alt + H,J,K,L
+  { key = "J",      mods = "Command|Shift", chars = "\u001BJ" },
+  { key = "H",      mods = "Command|Shift", chars = "\u001BH" },
+  { key = "K",      mods = "Command|Shift", chars = "\u001BK" },
+  { key = "L",      mods = "Command|Shift", chars = "\u001BL" },
+]
