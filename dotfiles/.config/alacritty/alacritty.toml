@@ -61,7 +61,7 @@ size = 18
 
 [font.normal]
 family = "FiraCode Nerd Font"
-style = "Medium"
+style = "Retina"
 
 [mouse]
 hide_when_typing = true
@@ -72,6 +72,10 @@ history = 10000
 [window]
 decorations = "none"
 opacity = 0.95
+
+[terminal.shell]
+program = "/bin/zsh"
+args = ["--login", "-c", "tmux"]
 
 [keyboard]
 bindings = [
