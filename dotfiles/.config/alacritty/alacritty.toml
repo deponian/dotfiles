@@ -67,20 +67,19 @@ style = "Retina"
 hide_when_typing = true
 
 [scrolling]
-history = 10000
+history = 100000
 
 [window]
 decorations = "none"
 opacity = 0.95
 
-[terminal.shell]
-program = "/bin/zsh"
-args = ["--login", "-c", "tmux"]
-
 [keyboard]
 bindings = [
   # toggle fullscreen
   { key = "F12", action = "ToggleFullscreen"},
+
+  # map Command + x to Alt + c (FZF go to directory)
+  { key = "X",      mods = "Command",       chars = "\u001Bc" },
 
   # map Command + h,j,k,l to Alt + h,j,k,l
   { key = "J",      mods = "Command",       chars = "\u001Bj" },
